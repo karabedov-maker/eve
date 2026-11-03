@@ -24,4 +24,10 @@
 
 ## Учётные записи агентов на этой машине (karab-pc)
 
-- SSH-ключи GitHub: `~/.ssh/id_ed25519_github` (Claude Code), `~/.ssh/id_ed25519_github_zcode` (ZCode). Аккаунт: karabedov-maker.
+Каждый агент ходит на GitHub **только своим ключом** (решение Андрея, 03.11.2026):
+
+- **Claude Code**: ключ `~/.ssh/id_ed25519_github`, вход по умолчанию `github.com`
+- **ZCode**: ключ `~/.ssh/id_ed25519_github_zcode`, персональный вход `github-zcode` в `~/.ssh/config`. Свои репозитории: `git config core.sshCommand "ssh -i ~/.ssh/id_ed25519_github_zcode -o IdentitiesOnly=yes"` или клонирование через `git@github-zcode:…`. Ключ ZCode из общего блока github.com удалён — ходить чужим ключом невозможно.
+- **Новый агент** = новый ключ + свой Host-алиас по этому же образцу (иначе ssh возьмёт первый сработавший ключ из config — атрибуция собьётся).
+
+Аккаунт общий: karabedov-maker.
