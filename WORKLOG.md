@@ -25,3 +25,11 @@
 - Создан координационный хаб: AGENTS.md (правила) + этот WORKLOG. Решение Андрея: GitHub — общая видимость изменений для ZCode / Codex / Claude Code / Евы.
 - Установлен gh CLI v2.103.3 (авторизация — pending, инструкция у Андрея).
 - Кратко о сделанном ранее на серверах (полные детали — /root/VPN-PIPELINE.md на Москве): Варшава EDIS встроена в failover (транспорт vless+ws+TLS:443 без SNI — DPI-лотерея EDIS), Telegram фермы ходит напрямую по IPv6 с авто-страховкой на VPN, 4 HAPP-профиля (CZ/PL × WiFi/LTE) у Андрея.
+
+## 2026-11-18 19:10 — [zcode] ТСПУ-блок Варшавы: диагноз + v6-нога на vm754408 + доступы Zcode на все 4 VPS
+
+- **ТСПУ-блок** (с ~18:05 МСК): v4 РФ→EDIS 192.36.39.17 дропается по TCP (ICMP проходит). Доказано tcpdump на vm746226: SYN Варшавы приходит, SYN-ACK Москвы уходит — не доходит. Фильтр адресный, на транзите RETN (AS57304/9002), неравномерный: masterhost.ru и яндекс с Варшавы открываются. Прага↔Варшава и IPv6 не затронуты.
+- **Доступы Zcode**: отдельные ed25519-ключи на все 4 VPS (`msk-masterhost-zcode`, `prague-mchost`, `edis-warsaw-zcode` + обходы `edis-warsaw-relay`/`edis-warsaw-v6`, `mh2-zcode`), aliases в ~/.ssh/config. Пароли не нужны.
+- **Опознан 4-й VPS** vm754408 («Москва VPN», вход HAPP): ogorod-kalendar.ru + REALITY/ws/xhttp на одном :443, выходы Прага и Варшава-через-Прагу.
+- **Новая v6-нога** на vm754408: outbound `vless-pl-v6` (прямая IPv6 на Варшаву, тест 14.5 МБ/с против 12.6 через Прагу), тест-socks 127.0.0.1:1088, авто-failover `pl-leg-failover.py` (таймер 90 с, via-cz ⇄ v6, антифлап, валидация конфига). Варшава ip6tables: 443/v6 разрешён и для vm754408.
+- Бэкапы: `config.json.bak.20261118-pre-v6leg` (vm754408), `rules.v6.bak.20261118-pre-v6leg` (Варшава), `VPN-PIPELINE.md.bak.20261118-pre-v6leg`. Полные детали — /root/VPN-PIPELINE.md, записи 18.11.
