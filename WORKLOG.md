@@ -33,3 +33,11 @@
 - **Опознан 4-й VPS** vm754408 («Москва VPN», вход HAPP): ogorod-kalendar.ru + REALITY/ws/xhttp на одном :443, выходы Прага и Варшава-через-Прагу.
 - **Новая v6-нога** на vm754408: outbound `vless-pl-v6` (прямая IPv6 на Варшаву, тест 14.5 МБ/с против 12.6 через Прагу), тест-socks 127.0.0.1:1088, авто-failover `pl-leg-failover.py` (таймер 90 с, via-cz ⇄ v6, антифлап, валидация конфига). Варшава ip6tables: 443/v6 разрешён и для vm754408.
 - Бэкапы: `config.json.bak.20261118-pre-v6leg` (vm754408), `rules.v6.bak.20261118-pre-v6leg` (Варшава), `VPN-PIPELINE.md.bak.20261118-pre-v6leg`. Полные детали — /root/VPN-PIPELINE.md, записи 18.11.
+
+## 2026-11-18 20:00 — [zcode] Прага: «огородный» стек на 443 + прямые профили CZ Direct
+
+- По идее Андрея (russianpraga.ru как маска в стиле ogorod) построен полный стек: xray REALITY :443 (serverNames russianpraga.ru, dest→Caddy lo:8444) + ws/xhttp за Caddy-путями (lo:10010/10011).
+- 3 HAPP-профиля «🇨🇿 CZ Direct | WiFi / LTE / LTE XHTTP» — телефоны ходят в Прагу напрямую, минуя masterhost (разгрузка концентрации на одном хостере).
+- Проверено E2E: REALITY+vision → exit 178.208.75.190; ws через Caddy → тот же; сайт-маска через fallback 200/24мс; tproxy жив; нога ботов 8443 (alza.cz) не трогалась и работает.
+- Нюансы: юнит xray@relay.service (шаблонный); Caddy admin off → только restart; ACME теперь HTTP-01 only; `xray x25519` в 26.10.31 меняет формат вывода.
+- Бэкапы: relay.json.bak.20261118-pre-direct, Caddyfile.bak.20261118-pre-direct. Профили: prague_direct_profiles.txt. Детали: /root/VPN-PIPELINE.md (запись 18.11 вечер).
