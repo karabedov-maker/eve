@@ -41,3 +41,10 @@
 - Проверено E2E: REALITY+vision → exit 178.208.75.190; ws через Caddy → тот же; сайт-маска через fallback 200/24мс; tproxy жив; нога ботов 8443 (alza.cz) не трогалась и работает.
 - Нюансы: юнит xray@relay.service (шаблонный); Caddy admin off → только restart; ACME теперь HTTP-01 only; `xray x25519` в 26.10.31 меняет формат вывода.
 - Бэкапы: relay.json.bak.20261118-pre-direct, Caddyfile.bak.20261118-pre-direct. Профили: prague_direct_profiles.txt. Детали: /root/VPN-PIPELINE.md (запись 18.11 вечер).
+
+## 2026-11-18 23:30 — [zcode] Выход Варшавы Prefer-v6 + AAAA всем доменам + HAPP v2 (9 профилей)
+
+- Warsaw freedom: domainStrategy=UseIPv6 (PreferIPv6/ForceIPv6 не подходят в 26.10.31: Force не откатывается на v4). Сайты с AAAA теперь уходят с 2a03:f80:48:8e28::1 (PL-гео), v4-only — откат.
+- Всем 8 DNS-зонам на Moscow named добавлены AAAA @+www → 2a00:15f8:a003:f:1::1d (db.*.bak.20261118-pre-aaaa). Все свои сайты + ChatGPT проверены через PL-выход: 200/~0.6с.
+- Грабли: отрицательный кеш AAAA в systemd-resolved Варшавы → resolvctl flush-caches. www.karabedov.ru — серт без SAN www (не VPN).
+- Полный комплект HAPP v2: 9 профилей = 6 через «Москва VPN» (CZ/PL × WiFi/LTE/XHTTP) + 3 «CZ Direct» через Прагу (russianpraga.ru). Файл: happ_all_profiles_v2.txt.
