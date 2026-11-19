@@ -48,3 +48,8 @@
 - Всем 8 DNS-зонам на Moscow named добавлены AAAA @+www → 2a00:15f8:a003:f:1::1d (db.*.bak.20261118-pre-aaaa). Все свои сайты + ChatGPT проверены через PL-выход: 200/~0.6с.
 - Грабли: отрицательный кеш AAAA в systemd-resolved Варшавы → resolvctl flush-caches. www.karabedov.ru — серт без SAN www (не VPN).
 - Полный комплект HAPP v2: 9 профилей = 6 через «Москва VPN» (CZ/PL × WiFi/LTE/XHTTP) + 3 «CZ Direct» через Прагу (russianpraga.ru). Файл: happ_all_profiles_v2.txt.
+
+## 2026-11-19 — [zcode] karabedov.ru: серт расширен SAN www
+
+- Единственный серт без www (остальные 13 доменов — с www). Исправлено: nginx 443-блоку добавлен www в server_name (бэкап karabedov.ru.bak.20261119-pre-www), certbot --nginx certonly --expand → SAN теперь karabedov.ru + www.karabedov.ru.
+- Проверено: локально 200 (0.13с), через PL-выход v6 200 (0.63с). Апекс не тронут.
