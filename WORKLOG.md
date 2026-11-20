@@ -53,3 +53,9 @@
 
 - Единственный серт без www (остальные 13 доменов — с www). Исправлено: nginx 443-блоку добавлен www в server_name (бэкап karabedov.ru.bak.20261119-pre-www), certbot --nginx certonly --expand → SAN теперь karabedov.ru + www.karabedov.ru.
 - Проверено: локально 200 (0.13с), через PL-выход v6 200 (0.63с). Апекс не тронут.
+
+## 2026-11-20 — [zcode] ogorod-kalendar.ru: AAAA в панели MCHost (через браузер)
+
+- Андрей залогинился в my.mchost.ru во встроенном браузере; я добавил в зону /dnsZone/index/36167 две записи: `@ AAAA 2a00:15f8:a003:8:1::2c` и `www AAAA 2a00:15f8:a003:8:1::2c`.
+- Проверено: dns1.mchost.ru и 1.1.1.1 отдают AAAA; сайт открывается по v6 (200/0.25с, remote ip = v6 «Москва VPN»). Маска огорода теперь dual-stack.
+- Грабли UI: кнопка «Добавить запись» — это input.addRecord (клик через evaluate), форма — bootbox-модал (name/type/prio/content).
