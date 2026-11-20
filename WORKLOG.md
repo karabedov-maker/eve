@@ -59,3 +59,10 @@
 - Андрей залогинился в my.mchost.ru во встроенном браузере; я добавил в зону /dnsZone/index/36167 две записи: `@ AAAA 2a00:15f8:a003:8:1::2c` и `www AAAA 2a00:15f8:a003:8:1::2c`.
 - Проверено: dns1.mchost.ru и 1.1.1.1 отдают AAAA; сайт открывается по v6 (200/0.25с, remote ip = v6 «Москва VPN»). Маска огорода теперь dual-stack.
 - Грабли UI: кнопка «Добавить запись» — это input.addRecord (клик через evaluate), форма — bootbox-модал (name/type/prio/content).
+
+## 2026-11-20 16:05 — [zcode] russianwarsaw.ru: домен-маска Варшавы + v6-нога основная
+
+- Зарегистрирован russianwarsaw.ru через MCHost (панель, 490₽ с баланса; зона 36963: A+AAAA @/www → Варшава; автопродление выключено).
+- Ноги mh2→Варшава: serverName=russianwarsaw.ru (пин сохранён) — SNI↔IP↔DNS согласованы, для DPI это HTTPS к сайту.
+- pl-leg-failover: приоритет сменён, активная PL-нога теперь прямая v6 (exit 2a03:f80:48:8e28::1), через Прагу — запасная.
+- Проверки: обе ноги E2E OK, PL-rule=vless-pl-v6, failover-журнал чист. Бэкап config.json.bak.20261120-pre-sni.
